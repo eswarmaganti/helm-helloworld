@@ -1,0 +1,5 @@
+---
+releases:
+  - name: helloworld-release
+    chart: .
+    installed: false 

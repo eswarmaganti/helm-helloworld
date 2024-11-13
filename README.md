@@ -86,13 +86,49 @@
 
 ## Managing the helm chart using helmfile commandline
 
-- Create a helmfile with filename **`helmfile.yaml`** with the following content
-  ```
-  ---
-  releases:
-  - name: helloworld-release
-    chart: .
-    installed: <flag>
-  ```
-- To install the helmfile we need to update the installed flag vaule with true **`releases[].installed = true`** in helmfile.yaml
-- To uninstall the helmfile we need to update the installed flag vaule with false **`releases[].installed = false`** in helmfile.yaml
+- ### Installing a helm chart using helmfile
+  - Create a helmfile with filename **`helmfile.yaml`** with the following content
+
+    ```
+    ---
+    releases:
+    - name: helloworld-release
+      chart: .
+      installed: <flag>
+    ```
+  - To install the helmfile we need to update the installed flag vaule with true **`releases[].installed = true`** in helmfile.yaml
+  - To uninstall the helmfile we need to update the installed flag vaule with false **`releases[].installed = false`** in helmfile.yaml
+
+- ### Installing a helm chart using remote git repository.
+  - Create a helmfile with repositories attribute and provide the name and url to the remote git repository like below
+    ```
+    ---
+    repositories:
+      - name:  helm-helloworld
+        url: git+https://github.com/eswarmaganti/helm-helloworld@helloworld?ref=main
+    releases:
+      - name: helloworld-release
+        chart: helm-helloworld/helloworld
+        installed: true
+    ```
+  - To install the helm chart using helmfile we can use the below command
+  *`helmfile -f <path/helm-filename.yaml> sync`* 
+
+- ### Install multiple helm charts using a single helm file
+  - we can define multiple helmchart releases under releases attribute in helm file like below
+  
+    ```
+    ---
+    repositories:
+      - name:  helm-helloworld
+        url: git+https://github.com/eswarmaganti/helm-helloworld@helloworld?ref=main
+    releases:
+      - name: helloworld-release
+        chart: helm-helloworld/helloworld
+        installed: false
+        
+      - name: helloworld-release2
+        chart: helm-helloworld/helloworld
+        installed: false
+
+    ```

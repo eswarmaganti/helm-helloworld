@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pre-install-hook
+  annotations:
+    "helm.sh/hook": "pre-install"
+    "helm.sh/hook-delete-policy": "hook-succeeded"
+spec:
+  template:
+    metadata:
+      name: pre-install-job
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: busybox
+          image: busybox:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            ["sh", "-c", "echo The pre-install-hook pod is running && sleep 15"]

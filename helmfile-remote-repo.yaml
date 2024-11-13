@@ -1,0 +1,12 @@
+---
+repositories:
+  - name:  helm-helloworld
+    url: git+https://github.com/eswarmaganti/helm-helloworld@helloworld?ref=main
+releases:
+  - name: helloworld-release
+    chart: helm-helloworld/helloworld
+    installed: false
+    
+  - name: helloworld-release2
+    chart: helm-helloworld/helloworld
+    installed: false
